@@ -1,0 +1,2 @@
+- Shopping-list data lives in Supabase tables scoped by list membership (RLS via `is_member`); history rows are written only by database triggers on `items`, so every client gets consistent history.
+- Keep user-facing mutations routed through `useActions()` from `src/lib/list-data.ts` so the UI has one consistent data path.
