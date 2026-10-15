@@ -1,13 +1,6 @@
-# Local development values only. Copy this file to .dev.vars and fill it in.
-# Do not commit .dev.vars.
-SUPABASE_URL=
-SUPABASE_PUBLISHABLE_KEY=
-VITE_SUPABASE_URL=
-VITE_SUPABASE_PUBLISHABLE_KEY=
-
-# Required only by server-side admin operations. Never expose this value to the browser.
-SUPABASE_SERVICE_ROLE_KEY=
-
-# Required only if server-side cron routes are enabled.
-CRON_SECRET=
-CRON_SECRET_PREVIOUS=
+# Local-only secret used once to create the owner account. Copy this file to
+# .dev.vars for local development. Never commit .dev.vars.
+#
+# In production, set this interactively with:
+# npx.cmd wrangler secret put OWNER_BOOTSTRAP_PASSWORD
+OWNER_BOOTSTRAP_PASSWORD=

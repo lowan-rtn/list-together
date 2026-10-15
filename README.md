@@ -1,45 +1,38 @@
 # Panier
 
-Application de liste de courses partagée, construite avec TanStack Start, React, Vite et Supabase.
+Liste unique pour l'appartement, construite avec TanStack Start, React, Cloudflare Workers et D1.
 
 ## Développement local
 
-Vous avez besoin de Node.js 22.12 ou plus récent et de npm.
+Node.js 22.12+ et npm sont requis.
 
 ```sh
-git clone <repository-url>
-cd list-together
 npm install
 npm run dev
 ```
 
-## Scripts
+Pour tester la première connexion owner en local, copie `.dev.vars.example` vers `.dev.vars` et définis `OWNER_BOOTSTRAP_PASSWORD`. Ce fichier est ignoré par Git.
+
+## Déploiement et première configuration
+
+Le Worker et le binding D1 `DB` sont définis dans `wrangler.jsonc`; les migrations D1 versionnées se trouvent dans `d1/migrations/`.
+
+Après le déploiement du code, définis une seule fois le secret de bootstrap, sans le placer dans un fichier ou un commit :
+
+```powershell
+npx.cmd wrangler secret put OWNER_BOOTSTRAP_PASSWORD
+```
+
+Saisis un mot de passe de 10 caractères minimum. Connecte-toi ensuite sur le site avec `lowan.rtn@icloud.com` et ce mot de passe : il sera hashé puis enregistré dans D1. Enfin, supprime le secret temporaire :
+
+```powershell
+npx.cmd wrangler secret delete OWNER_BOOTSTRAP_PASSWORD
+```
+
+## Vérifications
 
 ```sh
 npm run build
 npm run test
-npm run lint
+npx wrangler deploy --dry-run
 ```
-
-## Déploiement Cloudflare Workers
-
-Le Worker est configuré dans `wrangler.jsonc`. Les déploiements GitHub utilisent cette configuration comme source de vérité.
-
-Avant le premier déploiement autonome, configure les variables suivantes dans Cloudflare Workers > `list-together` > Settings > Variables and Secrets :
-
-- `VITE_SUPABASE_URL`
-- `VITE_SUPABASE_PUBLISHABLE_KEY`
-- `SUPABASE_URL`
-- `SUPABASE_PUBLISHABLE_KEY`
-
-Ajoute `SUPABASE_SERVICE_ROLE_KEY` comme secret uniquement si une route serveur utilise les opérations administrateur Supabase. N’ajoute jamais cette clé avec le préfixe `VITE_`.
-
-Les variables `VITE_*` sont intégrées pendant le build ; les variables sans préfixe `VITE_` doivent aussi être présentes dans l’environnement d’exécution du Worker. La configuration conserve les variables définies dans le tableau de bord Cloudflare.
-
-## Technologies
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
-- Supabase
