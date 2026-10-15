@@ -5,6 +5,13 @@
   "compatibility_flags": ["nodejs_compat"],
   "main": "@tanstack/react-start/server-entry",
   "keep_vars": true,
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "list-together-db",
+      "database_id": "138e8988-5d1c-41af-8303-8fb82cd7ef35"
+    }
+  ],
   "observability": {
     "enabled": true
   }
